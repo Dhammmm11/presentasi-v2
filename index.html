@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hewan Langka Indonesia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f4c3a 0%, #1a5f4f 25%, #2d8659 50%, #4a9b6e 75%, #6bb087 100%);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Floating leaves animation */
+        .leaf {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            border-radius: 0 100% 0 100%;
+            animation: float 15s infinite linear;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .leaf:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .leaf:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .leaf:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .leaf:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .leaf:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .leaf:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .leaf:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .leaf:nth-child(8) { left: 80%; animation-delay: 14s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF6B35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            to { text-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animal Cards */
+        .animals-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .animal-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 40px 0;
+            padding: 40px;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .animal-card:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .animal-card:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .animal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .animal-card:hover::before {
+            animation: shine 0.6s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slideInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .animal-icon {
+            font-size: 3rem;
+            margin-right: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .animal-title {
+            flex: 1;
+        }
+
+        .animal-title h2 {
+            font-size: 2.2rem;
+            color: #FFD700;
+            margin-bottom: 5px;
+        }
+
+        .animal-title .scientific-name {
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            background: linear-gradient(45deg, #FF4444, #CC0000);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0);
+            }
+        }
+
+        .animal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .animal-info p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .facts-list {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #FFD700;
+        }
+
+        .facts-list h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .fact-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .fact-item::before {
+            content: '🌿';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Progress bars for population */
+        .population-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+            margin: 10px 0;
+        }
+
+        .population-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF4444, #FF8800, #FFAA00);
+            border-radius: 10px;
+            animation: fillBar 2s ease-out;
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+
+        .critically-endangered .population-fill { width: 15%; }
+        .endangered .population-fill { width: 25%; }
+        .vulnerable .population-fill { width: 40%; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 60px;
+        }
+
+        .footer h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .conservation-message {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .animal-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .animal-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .animal-icon {
+                margin: 0 0 20px 0;
+            }
+        }
+
+        /* Scroll animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .animal-card {
+                animation-play-state: paused;
+            }
+            
+            .animal-card.visible {
+                animation-play-state: running;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating leaves -->
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+    <div class="leaf"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🦎 Hewan Langka Indonesia 🐅</h1>
+        <p>Mengenal keragaman fauna langka Nusantara yang perlu kita lestarikan untuk generasi mendatang</p>
+    </div>
+
+    <!-- Animals Container -->
+    <div class="animals-container">
+        
+        <!-- Komodo Dragon -->
+        <div class="animal-card critically-endangered">
+            <div class="animal-header">
+                <div class="animal-icon">🦎</div>
+                <div class="animal-title">
+                    <h2>Komodo</h2>
+                    <div class="scientific-name">Varanus komodoensis</div>
+                </div>
+                <div class="status-badge">Rentan Punah</div>
+            </div>
+            <div class="animal-content">
+                <div class="animal-info">
+                    <p>Komodo adalah spesies kadal terbesar di dunia yang hanya ditemukan di beberapa pulau di Indonesia, yaitu Pulau Komodo, Rinca, Flores, dan Gili Motang. Hewan yang dijuluki "naga hidup" ini dapat tumbuh hingga panjang 3 meter dan berat 70 kg.</p>
+                    <p>Komodo memiliki kemampuan berburu yang luar biasa dengan bantuan indra penciuman yang tajam dan air liur yang mengandung racun. Mereka adalah predator puncak di habitatnya dan berperan penting dalam menjaga keseimbangan ekosistem.</p>
+                    <div class="population-bar">
+                        <div class="population-fill"></div>
+                    </div>
+                    <small>Populasi tersisa: ~3,000 ekor</small>
+                </div>
+                <div class="facts-list">
+                    <h3>Fakta Menarik</h3>
+                    <div class="fact-item">Dapat berlari hingga 20 km/jam</div>
+                    <div class="fact-item">Lidah bercabang untuk mendeteksi mangsa</div>
+                    <div class="fact-item">Hidup hingga 30 tahun</div>
+                    <div class="fact-item">Habitat: Savana dan hutan kering</div>
+                    <div class="fact-item">Status: Situs Warisan Dunia UNESCO</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orangutan -->
+        <div class="animal-card critically-endangered">
+            <div class="animal-header">
+                <div class="animal-icon">🦧</div>
+                <div class="animal-title">
+                    <h2>Orangutan</h2>
+                    <div class="scientific-name">Pongo pygmaeus & Pongo abelii</div>
+                </div>
+                <div class="status-badge">Sangat Terancam</div>
+            </div>
+            <div class="animal-content">
+                <div class="animal-info">
+                    <p>Orangutan adalah primata besar yang endemik di hutan hujan tropis Kalimantan dan Sumatera. Mereka adalah salah satu kerabat terdekat manusia dengan DNA yang 97% sama. Orangutan dikenal karena kecerdasan tinggi dan kemampuan menggunakan alat.</p>
+                    <p>Deforestasi dan perkebunan kelapa sawit menjadi ancaman utama bagi kelangsungan hidup orangutan. Mereka membutuhkan wilayah hutan yang luas untuk mencari makan dan berkembang biak.</p>
+                    <div class="population-bar">
+                        <div class="population-fill"></div>
+                    </div>
+                    <small>Populasi tersisa: ~104,000 ekor (Kalimantan) & ~14,000 ekor (Sumatera)</small>
+                </div>
+                <div class="facts-list">
+                    <h3>Fakta Menarik</h3>
+                    <div class="fact-item">Menghabiskan 90% waktu di pohon</div>
+                    <div class="fact-item">Memiliki rentang lengan hingga 2.3 meter</div>
+                    <div class="fact-item">Masa kehamilan 8.5 bulan</div>
+                    <div class="fact-item">Dapat hidup hingga 50 tahun</div>
+                    <div class="fact-item">Membangun sarang tidur setiap malam</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Harimau Sumatera -->
+        <div class="animal-card critically-endangered">
+            <div class="animal-header">
+                <div class="animal-icon">🐅</div>
+                <div class="animal-title">
+                    <h2>Harimau Sumatera</h2>
+                    <div class="scientific-name">Panthera tigris sumatrae</div>
+                </div>
+                <div class="status-badge">Sangat Terancam</div>
+            </div>
+            <div class="animal-content">
+                <div class="animal-info">
+                    <p>Harimau Sumatera adalah subspesies harimau terkecil yang masih bertahan hidup dan merupakan satu-satunya spesies harimau yang tersisa di Indonesia. Mereka memiliki ciri khas berupa garis-garis yang lebih rapat dan gelap dibandingkan harimau lainnya.</p>
+                    <p>Sebagai predator puncak, harimau Sumatera berperan vital dalam menjaga keseimbangan ekosistem hutan. Perburuan ilegal dan hilangnya habitat menjadi ancaman utama kelangsungan hidup mereka.</p>
+                    <div class="population-bar">
+                        <div class="population-fill"></div>
+                    </div>
+                    <small>Populasi tersisa: ~400 ekor</small>
+                </div>
+                <div class="facts-list">
+                    <h3>Fakta Menarik</h3>
+                    <div class="fact-item">Perenang yang sangat baik</div>
+                    <div class="fact-item">Dapat melompat hingga 10 meter</div>
+                    <div class="fact-item">Berburu secara soliter</div>
+                    <div class="fact-item">Wilayah jelajah hingga 60 km²</div>
+                    <div class="fact-item">Aktif terutama pada malam hari</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Badak Jawa -->
+        <div class="animal-card critically-endangered">
+            <div class="animal-header">
+                <div class="animal-icon">🦏</div>
+                <div class="animal-title">
+                    <h2>Badak Jawa</h2>
+                    <div class="scientific-name">Rhinoceros sondaicus</div>
+                </div>
+                <div class="status-badge">Sangat Terancam</div>
+            </div>
+            <div class="animal-content">
+                <div class="animal-info">
+                    <p>Badak Jawa adalah salah satu mamalia paling langka di dunia dan hanya ditemukan di Taman Nasional Ujung Kulon, Jawa Barat. Mereka memiliki satu cula dan kulit yang menyerupai baju zirah dengan lipatan-lipatan yang khas.</p>
+                    <p>Badak Jawa adalah herbivora yang berperan penting dalam penyebaran biji dan pembentukan struktur hutan. Tsunami 2004 dan penyakit menjadi ancaman tambahan selain perburuan dan hilangnya habitat.</p>
+                    <div class="population-bar">
+                        <div class="population-fill"></div>
+                    </div>
+                    <small>Populasi tersisa: ~75 ekor</small>
+                </div>
+                <div class="facts-list">
+                    <h3>Fakta Menarik</h3>
+                    <div class="fact-item">Bobot dapat mencapai 2.3 ton</div>
+                    <div class="fact-item">Hidup soliter kecuali saat kawin</div>
+                    <div class="fact-item">Dapat hidup hingga 40 tahun</div>
+                    <div class="fact-item">Memerlukan area berlumpur untuk mandi</div>
+                    <div class="fact-item">Pendengaran dan penciuman sangat tajam</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Burung Cenderawasih -->
+        <div class="animal-card vulnerable">
+            <div class="animal-header">
+                <div class="animal-icon">🦅</div>
+                <div class="animal-title">
+                    <h2>Cenderawasih</h2>
+                    <div class="scientific-name">Paradisaeidae</div>
+                </div>
+                <div class="status-badge">Rentan</div>
+            </div>
+            <div class="animal-content">
+                <div class="animal-info">
+                    <p>Cenderawasih atau Bird of Paradise adalah keluarga burung endemik Papua yang terkenal karena keindahan bulu dan tarian kawinnya yang spektakuler. Terdapat 42 spesies cenderawasih dengan berbagai corak warna yang memukau.</p>
+                    <p>Burung ini menjadi simbol Papua dan memiliki peran penting dalam budaya lokal. Deforestasi dan perdagangan ilegal menjadi ancaman utama bagi kelangsungan hidup berbagai spesies cenderawasih.</p>
+                    <div class="population-bar">
+                        <div class="population-fill"></div>
+                    </div>
+                    <small>Populasi bervariasi per spesies</small>
+                </div>
+                <div class="facts-list">
+                    <h3>Fakta Menarik</h3>
+                    <div class="fact-item">Jantan melakukan tarian kawin kompleks</div>
+                    <div class="fact-item">Bulu ekor dapat sepanjang 1 meter</div>
+                    <div class="fact-item">Memakan buah dan serangga</div>
+                    <div class="fact-item">Beberapa spesies berukuran sekecil burung pipit</div>
+                    <div class="fact-item">Habitat: Hutan hujan tropis pegunungan</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Macan Tutul Jawa -->
+        <div class="animal-card critically-endangered">
+            <div class="animal-header">
+                <div class="animal-icon">🐆</div>
+                <div class="animal-title">
+                    <h2>Macan Tutul Jawa</h2>
+                    <div class="scientific-name">Panthera pardus melas</div>
+                </div>
+                <div class="status-badge">Sangat Terancam</div>
+            </div>
+            <div class="animal-content">
+                <div class="animal-info">
+                    <p>Macan Tutul Jawa adalah subspesies macan tutul yang endemik di Pulau Jawa. Mereka memiliki tubuh yang lebih kecil dibandingkan macan tutul Afrika dan Asia dengan corak bintik (rosette) yang khas berwarna hitam.</p>
+                    <p>Sebagai predator nokturnal, macan tutul Jawa berperan penting dalam mengontrol populasi herbivora. Konflik dengan manusia dan fragmentasi habitat menjadi tantangan utama konservasi spesies ini.</p>
+                    <div class="population-bar">
+                        <div class="population-fill"></div>
+                    </div>
+                    <small>Populasi tersisa: ~250 ekor</small>
+                </div>
+                <div class="facts-list">
+                    <h3>Fakta Menarik</h3>
+                    <div class="fact-item">Pemanjat pohon yang sangat baik</div>
+                    <div class="fact-item">Dapat melompat hingga 6 meter</div>
+                    <div class="fact-item">Berburu pada malam hari</div>
+                    <div class="fact-item">Menyimpan mangsa di atas pohon</div>
+                    <div class="fact-item">Wilayah jelajah hingga 30 km²</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h2>🌱 Mari Lestarikan Bersama 🌱</h2>
+        <div class="conservation-message">
+            <p>Setiap spesies yang punah adalah kehilangan yang tidak dapat digantikan. Keanekaragaman hayati Indonesia adalah warisan berharga yang harus kita jaga untuk anak cucu kita. Dengan kesadaran, edukasi, dan tindakan nyata, kita dapat memastikan bahwa hewan-hewan langka ini tetap dapat ditemukan di alam liar Indonesia.</p>
+            <p><strong>Bersama kita bisa membuat perbedaan! 🌿</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer untuk animasi scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe semua animal cards
+        document.querySelectorAll('.animal-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Tambahkan efek parallax ringan pada scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const leaves = document.querySelectorAll('.leaf');
+            
+            leaves.forEach((leaf, index) => {
+                const speed = 0.5 + (index * 0.1);
+                leaf.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Tambahkan hover effect suara (opsional, perlu audio files)
+        document.querySelectorAll('.animal-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Animasi typing effect untuk judul
+        const title = document.querySelector('.header h1');
+        const originalText = title.textContent;
+        title.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < originalText.length) {
+                title.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+        
+        // Mulai typing effect setelah delay
+        setTimeout(typeWriter, 500);
+    </script>
+</body>
+</html>
